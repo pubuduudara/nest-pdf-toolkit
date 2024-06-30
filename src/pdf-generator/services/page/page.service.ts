@@ -27,7 +27,7 @@ export class PageService {
     const s3FolderPath = `${S3_FOLDERS.COVER_IMAGES}/${userId}`;
     for (const page of pageDtoList) {
       const imageUrl = await this.s3Service.getPreSignedUrl(
-        process.env.S3_BUCKET,
+        process.env.VIDAVU_CORE_ASSESTS_S3,
         s3FolderPath,
         page.imageName,
         S3_OPERATIONS.GET_OBJECT,
