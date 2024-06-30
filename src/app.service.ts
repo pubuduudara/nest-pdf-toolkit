@@ -38,6 +38,8 @@ export class AppService {
         `${OUTPUT_FOLDER}/${userId}`,
         userId,
       );
+      console.log('mergedPdfLocalPath', mergedPdfLocalPath);
+      return mergedPdfLocalPath;
     } catch (error) {
       console.log(`Failed to create pdf. Error: ${error}`);
     }

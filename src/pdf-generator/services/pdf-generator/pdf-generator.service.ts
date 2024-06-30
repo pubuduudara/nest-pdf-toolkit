@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
-import puppeteer from 'puppeteer';
-import path from 'path';
-import fs from 'fs';
+import * as puppeteer from 'puppeteer';
+import * as path from 'path';
+import * as fs from 'fs';
 import { PDFDocument } from 'pdf-lib';
 @Injectable()
 export class PdfGeneratorService {
@@ -18,13 +18,17 @@ export class PdfGeneratorService {
     htmlContent: string,
     outputFolder: string,
   ) {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      headless: true,
+      timeout: 0, // No timeout
+    });
     const page = await browser.newPage();
     await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
 
     // Wait for the image to load completely
     await page.waitForSelector('img', { visible: true, timeout: 30000 }); // 30 seconds timeout
-    const pdfPath = `${outputFolder}/${path.parse(imageName).name}.pdf`;
+    const pdfPath = path.join(outputFolder, `${imageName}.pdf`);
 
     //create folder structure
     if (!fs.existsSync(outputFolder)) {

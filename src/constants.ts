@@ -11,4 +11,4 @@ export const S3_FOLDERS = {
   UPLOADS: 'uploads',
 };
 
-export const OUTPUT_FOLDER = '/tmp';
+export const OUTPUT_FOLDER = 'output';
